@@ -16,8 +16,26 @@
             border: none;
         }
     </style>
+    <script>
+        // Function to get the value of a URL parameter
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Get the 'room' parameter value and create a global variable
+        var room = getParameterByName('room');
+    </script>
 </head>
 <body>
     <iframe src="https://editor.p5js.org/rohanjhunja/full/GZOm0SsAj"></iframe>
+    <script>
+        // Example usage of the 'room' variable
+        console.log("Room:", room);
+    </script>
 </body>
 </html>
