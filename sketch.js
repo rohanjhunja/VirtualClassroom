@@ -283,16 +283,27 @@ function draw() {
 
 function keyPressed() {
   if (keyCode === RIGHT_ARROW) {
+    console.log('right');
     // Increment the index to show the next room
     currentRoomIndex = (currentRoomIndex + 1) % roomKeys.length;
     updateRoom();
   } else if (keyCode === LEFT_ARROW) {
+    console.log('left');
     // Decrement the index to show the previous room
     // Ensure the index wraps around correctly if it goes below 0
     currentRoomIndex = (currentRoomIndex - 1 + roomKeys.length) % roomKeys.length;
     updateRoom();
   }
+  else if (key === 'A') {
+    console.log('A');
+    saveData();
+  }
+  else if (key === 'S') {
+    console.log('S');
+    getData();
+  }
 }
+
 
 function generateMandalaPattern(g) {
   g.clear(); // Clear previous frame's drawing
@@ -326,5 +337,28 @@ function generateMandalaPattern(g) {
   g.pop(); // Restore the drawing state
 }
 
+function saveData() {
+  console.log('save');
+  db.collection("classrooms").add({
+    key: "0",
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then((docRef) => {
+    console.log("Document written with ID: ", docRef.id);
+  })
+  .catch((error) => {
+    console.error("Error adding document: ", error);
+  });
+}
+
+
+function getData() {
+  console.log('get');
+  db.collection("classrooms").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+    });
+  });
+}
 
 
