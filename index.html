@@ -16,6 +16,30 @@
         }
     </style>
 <body>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyD8mIAcNHqljAngxhxawmjElbHT70Sik-U",
+    authDomain: "virtualclassroom-17a78.firebaseapp.com",
+    projectId: "virtualclassroom-17a78",
+    storageBucket: "virtualclassroom-17a78.appspot.com",
+    messagingSenderId: "882366753351",
+    appId: "1:882366753351:web:f524f83ca543b16bf81f62",
+    measurementId: "G-Z80HFPC64K"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+    
     <script src="sketch.js"></script>
 </body>
 </html>
