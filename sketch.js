@@ -294,11 +294,11 @@ function keyPressed() {
     currentRoomIndex = (currentRoomIndex - 1 + roomKeys.length) % roomKeys.length;
     updateRoom();
   }
-  else if (key === 'A') {
+  else if (keyCode === 65) {
     console.log('A');
     saveData();
   }
-  else if (key === 'S') {
+  else if (keyCode === 83) {
     console.log('S');
     getData();
   }
