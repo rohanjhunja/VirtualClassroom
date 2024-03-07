@@ -1,35 +1,37 @@
 const rooms = {
   room1: {
     url: 'https://raw.githubusercontent.com/rohanjhunja/VRSlides/1bdaa885b3254566f6088cc6767d77d96487124a/planet.jpeg',
-    coordinates: [{x:-361,y:-1}, 
-{x:-496,y:-76}, 
-{x:-748,y:-58}, 
-{x:-785,y:-134}, 
-{x:-263,y:-46}, 
-{x:-210,y:-96}, 
-{x:-153,y:-111}, 
-{x:220,y:-33}
+    coordinates: [
+{x:895,y:1255}, 
+{x:993,y:1210}, 
+{x:1047,y:1160}, 
+{x:1104,y:1145}, 
+{x:219,y:1223}, 
+{x:508,y:1198}, 
+{x:471,y:1122}, 
+{x:760,y:1180}
       // Additional coordinates as needed
     ]
   },
   room2: {
     url: 'https://raw.githubusercontent.com/rohanjhunja/VRSlides/1bdaa885b3254566f6088cc6767d77d96487124a/monument.jpeg',
-    coordinates: [{x:-4,y:-34}, 
-{x:-97,y:-18}, 
-{x:-313,y:13}, 
-{x:-628,y:-25}, 
-{x:-656,y:-109}, 
-{x:-603,y:-108}
+    coordinates: [
+{x:1253,y:1223}, 
+{x:1160,y:1238}, 
+{x:944,y:13}, 
+{x:628,y:1232}, 
+{x:601,y:1147}, 
+{x:653,y:1147}
       // Coordinates specific to room3
     ]
   },
   room3: {
     url: 'https://raw.githubusercontent.com/rohanjhunja/VRSlides/1bdaa885b3254566f6088cc6767d77d96487124a/lab.jpeg',
     coordinates: [
-{x:18,y:-14}, 
-{x:-297,y:39}, 
-{x:-946,y:38}, 
-{x:-1011,y:-13}
+      {x:19,y:1242}, 
+{x:957,y:39}, 
+{x:311,y:38}, 
+{x:245,y:1243}
       // Coordinates specific to room2
     ]
   },
@@ -141,7 +143,13 @@ function lockChangeAlert() {
 function updatePosition(e) {
   if (isLocked) {
     camX += e.movementX;
+    if(camX<0){
+      camX = 1257 + camX;
+    }
     camY += e.movementY;
+    if(camY<0){
+      camY = 1257 + camX;
+    }
   }
 }
 
@@ -275,14 +283,24 @@ function draw() {
 
 function keyPressed() {
   if (keyCode === RIGHT_ARROW) {
+    console.log('right');
     // Increment the index to show the next room
     currentRoomIndex = (currentRoomIndex + 1) % roomKeys.length;
     updateRoom();
   } else if (keyCode === LEFT_ARROW) {
+    console.log('left');
     // Decrement the index to show the previous room
     // Ensure the index wraps around correctly if it goes below 0
     currentRoomIndex = (currentRoomIndex - 1 + roomKeys.length) % roomKeys.length;
     updateRoom();
+  }
+  else if (key === 'A') {
+    console.log('A');
+    saveData();
+  }
+  else if (key === 'S') {
+    console.log('S');
+    getData();
   }
 }
 
@@ -316,4 +334,28 @@ function generateMandalaPattern(g) {
     }
   }
   g.pop(); // Restore the drawing state
+}
+
+function saveData() {
+  console.log('save');
+  db.collection("classrooms").add({
+    key: "0",
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then((docRef) => {
+    console.log("Document written with ID: ", docRef.id);
+  })
+  .catch((error) => {
+    console.error("Error adding document: ", error);
+  });
+}
+
+
+function getData() {
+  console.log('get');
+  db.collection("classrooms").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", doc.data());
+    });
+  });
 }
